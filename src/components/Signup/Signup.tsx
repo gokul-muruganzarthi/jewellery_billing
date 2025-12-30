@@ -1,5 +1,5 @@
 import React, { useState, type FormEvent, type ChangeEvent } from 'react';
-import styles from './Signup.module.scss';
+import styles from '../../styles/Auth.module.scss';
 import type { SignupProps, SignupFormData, UserRole } from './Signup.types';
 
 const Signup: React.FC<SignupProps> = ({ onSubmit, onNavigateToLogin }) => {

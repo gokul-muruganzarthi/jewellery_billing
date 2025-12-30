@@ -1,11 +1,18 @@
-// Color Variables
+// Auth.module.scss - Master Stylesheet for Authentication Components
+
+// ==========================================
+// Variables & Configuration
+// ==========================================
+
+// Color Palette
 $primary: #e29d12;
 $primary-hover: #d6920f;
 $primary-dark: #c48810;
 $background-light: #f8f7f6;
 $background-dark: #221c10;
+$success: #22c55e;
 
-// Dark mode colors
+// Dark Mode Colors
 $dark-card-bg: #1a160d;
 $dark-border: #3a3528;
 $dark-input-bg: #27231c;
@@ -14,7 +21,7 @@ $dark-text-primary: #dcd6ca;
 $dark-text-secondary: #b9b09d;
 $dark-text-muted: #6b6048;
 
-// Light mode colors
+// Light Mode Colors
 $light-card-bg: #ffffff;
 $light-border: #e5e7eb;
 $light-input-bg: #f9fafb;
@@ -22,6 +29,10 @@ $light-input-border: #d1d5db;
 $light-text-primary: #1f2937;
 $light-text-secondary: #6b7280;
 $light-text-muted: #9ca3af;
+
+// ==========================================
+// Layout & Container
+// ==========================================
 
 .container {
     position: relative;
@@ -37,6 +48,8 @@ $light-text-muted: #9ca3af;
     position: absolute;
     inset: 0;
     z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
 
     img {
         width: 100%;
@@ -62,13 +75,31 @@ $light-text-muted: #9ca3af;
     }
 }
 
+.backgroundBlob {
+    position: absolute;
+    bottom: -20%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background-color: rgba($primary, 0.1);
+    border-radius: 9999px;
+    filter: blur(100px);
+    pointer-events: none;
+}
+
 .contentWrapper {
     position: relative;
     z-index: 10;
     width: 100%;
-    max-width: 32rem;
+    max-width: 32rem; // Default width
     padding: 1rem;
+
+    // Sign up might need wider card sometimes, but 32rem is good standard
 }
+
+// ==========================================
+// Card Component
+// ==========================================
 
 .card {
     width: 100%;
@@ -99,12 +130,17 @@ $light-text-muted: #9ca3af;
     }
 }
 
+// ==========================================
+// Typography & Header
+// ==========================================
+
 .header {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin-bottom: 2rem;
+    text-align: center;
 }
 
 .iconWrapper {
@@ -147,6 +183,10 @@ $light-text-muted: #9ca3af;
         color: $dark-text-secondary;
     }
 }
+
+// ==========================================
+// Form Components
+// ==========================================
 
 .form {
     display: flex;
@@ -224,6 +264,98 @@ $light-text-muted: #9ca3af;
     }
 }
 
+.togglePasswordButton {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: $light-text-muted;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+
+    &:hover {
+        color: $light-text-primary;
+    }
+
+    .icon {
+        font-size: 1.25rem;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        color: $dark-text-muted;
+
+        &:hover {
+            color: white;
+        }
+    }
+}
+
+.passwordInput {
+    padding-right: 3rem;
+}
+
+// ==========================================
+// Form Actions & Layouts
+// ==========================================
+
+// Login Specific
+.rememberForgotRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.875rem;
+}
+
+.checkboxWrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: $light-text-secondary;
+    cursor: pointer;
+
+    input[type='checkbox'] {
+        width: 1rem;
+        height: 1rem;
+        border-radius: 0.25rem;
+        border: 1px solid $light-input-border;
+        background-color: $light-input-bg;
+        color: $primary;
+        cursor: pointer;
+
+        &:focus {
+            box-shadow: 0 0 0 2px rgba($primary, 0.3);
+        }
+    }
+
+    @media (prefers-color-scheme: dark) {
+        color: $dark-text-secondary;
+
+        input[type='checkbox'] {
+            border-color: $dark-input-border;
+            background-color: $dark-input-bg;
+        }
+    }
+}
+
+.forgotLink {
+    color: $primary;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+
+    &:hover {
+        color: $primary-hover;
+        text-decoration: underline;
+    }
+}
+
+// Signup Specific
 .roleGrid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -336,6 +468,10 @@ $light-text-muted: #9ca3af;
     }
 }
 
+// ==========================================
+// Buttons
+// ==========================================
+
 .submitButton {
     width: 100%;
     height: 3rem;
@@ -367,11 +503,20 @@ $light-text-muted: #9ca3af;
         transform: scale(0.98);
     }
 
-    .buttonIcon {
+    .icon {
         font-size: 1.25rem;
     }
 }
 
+.buttonIcon {
+    font-size: 1.25rem;
+}
+
+// ==========================================
+// Footer & Links
+// ==========================================
+
+.signupSection,
 .footer {
     text-align: center;
     font-size: 0.875rem;
@@ -381,8 +526,59 @@ $light-text-muted: #9ca3af;
     @media (prefers-color-scheme: dark) {
         color: $dark-text-secondary;
     }
+}
+
+.signupLink {
+    margin-left: 0.25rem;
+    font-weight: 700;
+    color: $primary;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    transition: color 0.2s;
+
+    &:hover {
+        color: $primary-hover;
+        text-decoration: underline;
+    }
+
+    .icon {
+        font-size: 1rem;
+    }
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid $light-border;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    background-color: rgba($light-input-bg, 0.5);
+    margin-left: -2rem;
+    margin-right: -2rem;
+    margin-bottom: -2rem;
+    padding-bottom: 2rem;
+
+    p {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .icon {
+        font-size: 1rem;
+        color: $success;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        border-color: $dark-border;
+        background-color: rgba($dark-input-bg, 0.5);
+    }
 
     a {
+        margin-left: 0.25rem;
         font-weight: 700;
         color: $primary;
         text-decoration: none;
@@ -404,6 +600,93 @@ $light-text-muted: #9ca3af;
 
         @media (prefers-color-scheme: dark) {
             color: $dark-text-muted;
+        }
+    }
+}
+
+// ==========================================
+// Forgot Password Specific
+// ==========================================
+
+.backLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    padding-top: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $light-text-secondary;
+    text-decoration: none;
+    transition: color 0.2s;
+    cursor: pointer;
+    background: none;
+    border: none;
+    width: 100%;
+
+    &:hover {
+        color: $primary;
+
+        .backIcon {
+            transform: translateX(-0.25rem);
+        }
+    }
+
+    @media (prefers-color-scheme: dark) {
+        color: $dark-text-secondary;
+
+        &:hover {
+            color: $primary;
+        }
+    }
+
+    .backIcon {
+        font-size: 1.125rem;
+        transition: transform 0.2s;
+    }
+}
+
+.successMessage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+    padding: 1rem 0;
+
+    .successIcon {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 9999px;
+        background-color: rgba($success, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba($success, 0.2);
+
+        span {
+            color: $success;
+            font-size: 2rem;
+        }
+    }
+
+    .successTitle {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: $light-text-primary;
+
+        @media (prefers-color-scheme: dark) {
+            color: $dark-text-primary;
+        }
+    }
+
+    .successText {
+        font-size: 0.875rem;
+        color: $light-text-secondary;
+        max-width: 280px;
+
+        @media (prefers-color-scheme: dark) {
+            color: $dark-text-secondary;
         }
     }
 }

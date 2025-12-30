@@ -1,5 +1,5 @@
 import React, { useState, type FormEvent, type ChangeEvent } from 'react';
-import styles from './AdminLogin.module.scss';
+import styles from '../../styles/Auth.module.scss';
 import type { AdminLoginProps, LoginFormData } from './AdminLogin.types';
 
 const AdminLogin: React.FC<AdminLoginProps> = ({ onSubmit, onNavigateToSignup, onNavigateToForgotPassword }) => {

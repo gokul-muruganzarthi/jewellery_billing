@@ -1,5 +1,5 @@
 import React, { useState, type FormEvent, type ChangeEvent } from 'react';
-import styles from './ForgotPassword.module.scss';
+import styles from '../../styles/Auth.module.scss';
 import type { ForgotPasswordProps, ForgotPasswordFormData } from './ForgotPassword.types';
 
 const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onSubmit, onNavigateToLogin }) => {
@@ -47,15 +47,14 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = ({ onSubmit, onNavigateToL
                     <div className={styles.goldStripe}></div>
 
                     <div className={styles.cardContent}>
-                        <div className={styles.iconWrapper}>
-                            <span className={`material-symbols-outlined ${styles.icon}`}>
-                                lock_reset
-                            </span>
-                        </div>
-
                         {!isSubmitted ? (
                             <>
                                 <div className={styles.header}>
+                                    <div className={styles.iconWrapper}>
+                                        <span className={`material-symbols-outlined ${styles.icon}`}>
+                                            lock_reset
+                                        </span>
+                                    </div>
                                     <h1 className={styles.title}>Forgot Password?</h1>
                                     <p className={styles.subtitle}>
                                         Don't worry, it happens. Enter your email address below and we'll send you a link to reset your password.
