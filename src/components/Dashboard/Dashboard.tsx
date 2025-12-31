@@ -5,6 +5,11 @@ import StatsCard from './StatsCard';
 import InventoryTable from './InventoryTable';
 import CostEstimator from './CostEstimator';
 import ExchangeCalculator from './ExchangeCalculator';
+import CustomerManagement from './CustomerManagement';
+import type { Customer } from './CustomerManagement';
+import { INITIAL_CUSTOMERS } from './CustomerManagement';
+import CustomerDetail from './CustomerDetail';
+import AddCustomer from './AddCustomer';
 import type { Product } from './Dashboard.types';
 
 const MOCK_PRODUCTS: Product[] = [
@@ -68,6 +73,8 @@ const MOCK_PRODUCTS: Product[] = [
 const Dashboard: React.FC = () => {
     const [sidebarActive, setSidebarActive] = useState('Dashboard');
     const [exchangeValue, setExchangeValue] = useState<number>(0);
+    const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
+    const [customers, setCustomers] = useState<Customer[]>(INITIAL_CUSTOMERS);
 
     return (
         <div className={styles.dashboardContainer}>
@@ -98,6 +105,43 @@ const Dashboard: React.FC = () => {
                             onAddToInvoice={(value) => {
                                 setExchangeValue(value);
                                 setSidebarActive('Cost Estimator');
+                            }}
+                        />
+                    ) : sidebarActive === 'Customers' ? (
+                        <CustomerManagement
+                            customers={customers}
+                            onSelectCustomer={(customer) => {
+                                setSelectedCustomer(customer);
+                                setSidebarActive('Customer Detail');
+                            }}
+                            onAddCustomer={() => {
+                                setSelectedCustomer(null);
+                                setSidebarActive('Add Customer');
+                            }}
+                        />
+                    ) : sidebarActive === 'Customer Detail' && selectedCustomer ? (
+                        <CustomerDetail
+                            customer={selectedCustomer}
+                            onBack={() => setSidebarActive('Customers')}
+                            onEdit={(customer) => {
+                                setSelectedCustomer(customer);
+                                setSidebarActive('Add Customer');
+                            }}
+                        />
+                    ) : sidebarActive === 'Add Customer' ? (
+                        <AddCustomer
+                            initialData={selectedCustomer || undefined}
+                            onBack={() => setSidebarActive(selectedCustomer ? 'Customer Detail' : 'Customers')}
+                            onSave={(updatedCust) => {
+                                setCustomers(prev => {
+                                    const exists = prev.find(c => c.id === updatedCust.id);
+                                    if (exists) {
+                                        return prev.map(c => c.id === updatedCust.id ? updatedCust : c);
+                                    }
+                                    return [updatedCust, ...prev];
+                                });
+                                setSelectedCustomer(updatedCust); // Update selected customer too
+                                setSidebarActive('Customer Detail');
                             }}
                         />
                     ) : (

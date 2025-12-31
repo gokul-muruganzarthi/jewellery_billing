@@ -362,7 +362,7 @@ $warning: #eab308;
         border: 1px solid $border-dark;
 
         &:hover {
-            background-color: lighten($surface-dark, 5%);
+            background-color: #3a3222; // approx lighten($surface-dark, 5%)
         }
     }
 }
@@ -519,7 +519,7 @@ $warning: #eab308;
 .interfaceContainer {
     display: flex;
     flex-direction: column;
-    background-color: lighten($sidebar-bg, 2%);
+    background-color: #1d1b15; // approx lighten($sidebar-bg, 2%)
     border: 1px solid $border-dark;
     border-radius: 0.75rem;
     overflow: hidden;
